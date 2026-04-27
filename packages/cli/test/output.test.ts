@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { parseOutputFormat, print } from "../src/lib/output.js";
 import { print } from "../src/lib/output.js";
 
 describe("output", () => {
@@ -13,5 +14,10 @@ describe("output", () => {
 
   it("supports table output without throwing", () => {
     expect(() => print([{ id: "1", name: "Test" }], "table")).not.toThrow();
+  });
+
+  it("validates output format", () => {
+    expect(parseOutputFormat("json")).toBe("json");
+    expect(() => parseOutputFormat("xml")).toThrow("Invalid output format");
   });
 });

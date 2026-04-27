@@ -1,5 +1,6 @@
 {
   "name": "@braze/cli",
+  "version": "0.2.0",
   "version": "0.1.0",
   "description": "Unofficial Braze CLI",
   "type": "module",
@@ -20,6 +21,9 @@
     "cli-table3": "^0.6.5",
     "commander": "^12.1.0",
     "yaml": "^2.8.1"
+  },
+  "optionalDependencies": {
+    "keytar": "^7.9.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.18",
