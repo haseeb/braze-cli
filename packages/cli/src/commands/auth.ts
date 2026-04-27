@@ -8,7 +8,7 @@ import {
   upsertWorkspace
 } from "../lib/config.js";
 import { saveApiKey } from "../lib/credentials.js";
-import { print } from "../lib/output.js";
+import { parseOutputFormat, print } from "../lib/output.js";
 import type { OutputFormat } from "../lib/types.js";
 
 export const authCommand = (): Command => {
@@ -69,7 +69,7 @@ export const authCommand = (): Command => {
   cmd
     .command("workspace-list")
     .description("List configured workspaces")
-    .option("-o, --output <format>", "table|json|yaml", "table")
+    .option("-o, --output <format>", "table|json|yaml", parseOutputFormat, "table")
     .action((opts: { output: OutputFormat }) => {
       const rows = listWorkspaces();
       print(rows, opts.output);

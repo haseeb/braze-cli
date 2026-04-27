@@ -6,7 +6,7 @@ export const parseContentBlocksCsv = (filePath: string): ContentBlockBulkInput[]
   if (!raw) return [];
 
   const [headerLine, ...lines] = raw.split(/\r?\n/);
-  const headers = headerLine.split(",").map((value) => value.trim());
+  const headers = splitCsvLine(headerLine).map((value) => value.trim());
   const idIndex = headers.indexOf("id");
   const contentIndex = headers.indexOf("content");
 
@@ -16,13 +16,13 @@ export const parseContentBlocksCsv = (filePath: string): ContentBlockBulkInput[]
 
   return lines
     .filter((line) => line.trim().length > 0)
-    .map((line) => {
+    .map((line, idx) => {
       const cells = splitCsvLine(line);
       const id = cells[idIndex]?.trim();
       const content = cells[contentIndex] ?? "";
 
       if (!id) {
-        throw new Error(`Invalid row in ${filePath}: missing id.`);
+        throw new Error(`Invalid row ${idx + 2} in ${filePath}: missing id.`);
       }
 
       return { id, content };
@@ -36,7 +36,15 @@ const splitCsvLine = (line: string): string[] => {
 
   for (let i = 0; i < line.length; i += 1) {
     const char = line[i];
+
     if (char === '"') {
+      const next = line[i + 1];
+      if (inQuotes && next === '"') {
+        current += '"';
+        i += 1;
+        continue;
+      }
+
       inQuotes = !inQuotes;
       continue;
     }
@@ -48,6 +56,10 @@ const splitCsvLine = (line: string): string[] => {
     }
 
     current += char;
+  }
+
+  if (inQuotes) {
+    throw new Error("Malformed CSV: unmatched quote in line.");
   }
 
   out.push(current);

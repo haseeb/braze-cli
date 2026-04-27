@@ -75,7 +75,7 @@ Use headers: `id,content`
 
 ```csv
 id,content
-block_123,"Hello {{${first_name | default: 'there'}}}"
+block_123,"Hello {{first_name | default: 'there'}}"
 block_124,"Spring offer copy"
 ```
 
@@ -99,3 +99,9 @@ BRAZE_API_KEY=<BRAZE_KEY> node packages/cli/dist/index.js content-blocks bulk-up
 ## License
 
 MIT
+
+
+## Development quality gates
+
+- GitHub Actions CI runs lint, test, and build on every push/PR.
+- Bulk updates support `--dry-run`, `--concurrency`, and `--fail-fast` for safer production operations.

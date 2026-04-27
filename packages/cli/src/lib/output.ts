@@ -2,6 +2,16 @@ import Table from "cli-table3";
 import YAML from "yaml";
 import type { OutputFormat } from "./types.js";
 
+const ALLOWED_OUTPUTS: OutputFormat[] = ["table", "json", "yaml"];
+
+export const parseOutputFormat = (value: string): OutputFormat => {
+  if (ALLOWED_OUTPUTS.includes(value as OutputFormat)) {
+    return value as OutputFormat;
+  }
+
+  throw new Error(`Invalid output format '${value}'. Allowed values: ${ALLOWED_OUTPUTS.join(", ")}.`);
+};
+
 export const print = (rows: unknown, format: OutputFormat): void => {
   if (format === "json") {
     console.log(JSON.stringify(rows, null, 2));

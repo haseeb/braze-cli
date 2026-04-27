@@ -23,5 +23,5 @@ BRAZE_API_KEY=*** node packages/cli/dist/index.js canvases get <canvas-id> --wor
 ## 4) Content block dry-run bulk update
 
 ```bash
-node packages/cli/dist/index.js content-blocks bulk-update --from ./blocks.csv --workspace prod --dry-run --output table
+node packages/cli/dist/index.js content-blocks bulk-update --from ./blocks.csv --workspace prod --dry-run --concurrency 4 --output table
 ```

@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { BrazeClient } from "../lib/braze-client.js";
-import { print } from "../lib/output.js";
 import { resolveWorkspace } from "../lib/config.js";
+import { parseOutputFormat, print } from "../lib/output.js";
 import type { OutputFormat } from "../lib/types.js";
 
 export const canvasesCommand = (): Command => {
@@ -10,7 +10,7 @@ export const canvasesCommand = (): Command => {
   cmd
     .command("list")
     .option("-w, --workspace <workspace>", "Workspace name")
-    .option("-o, --output <format>", "table|json|yaml", "table")
+    .option("-o, --output <format>", "table|json|yaml", parseOutputFormat, "table")
     .action(async (opts: { workspace?: string; output: OutputFormat }) => {
       const workspace = resolveWorkspace(opts.workspace);
       const client = new BrazeClient(workspace);
@@ -22,7 +22,7 @@ export const canvasesCommand = (): Command => {
     .command("get")
     .argument("<id>", "Canvas ID")
     .option("-w, --workspace <workspace>", "Workspace name")
-    .option("-o, --output <format>", "table|json|yaml", "json")
+    .option("-o, --output <format>", "table|json|yaml", parseOutputFormat, "json")
     .action(async (id: string, opts: { workspace?: string; output: OutputFormat }) => {
       const workspace = resolveWorkspace(opts.workspace);
       const client = new BrazeClient(workspace);

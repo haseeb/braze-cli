@@ -24,6 +24,15 @@ describe("parseContentBlocksCsv", () => {
     ]);
   });
 
+  it("supports commas and escaped quotes in content", () => {
+    const file = writeTmp('id,content\nabc,"hello, world"\ndef,"He said ""hi"""\n');
+    const rows = parseContentBlocksCsv(file);
+    expect(rows).toEqual([
+      { id: "abc", content: "hello, world" },
+      { id: "def", content: 'He said "hi"' }
+    ]);
+  });
+
   it("throws when required headers are missing", () => {
     const file = writeTmp("identifier,body\nabc,hello\n");
     expect(() => parseContentBlocksCsv(file)).toThrow("CSV must include 'id' and 'content' columns.");
