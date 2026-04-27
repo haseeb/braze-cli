@@ -1,100 +1,101 @@
 # braze-cli
 
-> Unofficial CLI and [Claude Code](https://claude.com/claude-code) agent skill for [Braze](https://braze.com). Manage campaigns, canvases, and segments from your terminal — or from natural language.
+A production-minded, terminal-first Braze toolkit for MarTech teams:
 
-[![npm version](https://img.shields.io/npm/v/braze-cli.svg)](https://www.npmjs.com/package/braze-cli)
-[![CI](https://github.com/<your-username>/braze-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/braze-cli/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+- **`@braze/cli`** → TypeScript CLI for core Braze workflows.
+- **`braze-skill`** → Claude Code skill docs/templates for natural-language ops.
 
-> **Status:** Early development. v0.1 ships [date]. Watch the repo for releases.
+> This project is unofficial and not affiliated with Braze, Inc.
 
-## Why this exists
+## What is implemented now
 
-Braze powers customer engagement for thousands of companies, but its automation story is weak outside the in-app UI. The REST API is comprehensive but verbose, and there's no good open CLI. Every MarTech team rebuilds the same wrapper internally.
+### CLI (v0.2 foundation)
 
-`braze-cli` covers the 80% of Braze workflows that should be a one-liner — listing campaigns, exporting canvases, auditing segments, bulk-updating content blocks. The included Claude Code skill takes it further: drive Braze from natural language ("summarize this week's campaign performance and post it in Slack").
+- Workspace bootstrap and management:
+  - `braze auth init`
+  - `braze auth workspace-add`
+  - `braze auth workspace-use`
+  - `braze auth workspace-list`
+- Auth methods:
+  - Environment variable (`BRAZE_API_KEY` by default, configurable per workspace)
+  - Optional keychain storage via `braze auth login` (uses `keytar` when available)
+- Read commands:
+  - `campaigns list|get`
+  - `canvases list|get`
+  - `segments list|get`
+  - `content-blocks list|get`
+- Write helper:
+  - `content-blocks bulk-update --from <csv> [--dry-run]`
+- Output modes: `table`, `json`, `yaml`.
+- API client retries with exponential backoff for retryable status codes.
 
-Built by [Haseeb Tariq](https://www.linkedin.com/in/haseebtariq), Senior PM at T-Mobile, after attended Forge Braze.
+### Skill package
 
-## Install
+`packages/skill` contains a usable `SKILL.md` and reusable templates for:
 
-```bash
-npm install -g braze-cli
+- Weekly performance summaries
+- Segment audits
+- Release checklists
+
+## Repo layout
+
+```
+braze-cli/
+├── packages/
+│   ├── cli/    # TypeScript CLI
+│   └── skill/  # Claude Code skill files and prompt templates
+├── docs/
+└── examples/
 ```
 
 ## Quick start
 
 ```bash
-# Authenticate (stores key in OS keychain)
-braze auth login --workspace prod
+npm install
+npm run build
 
-# List campaigns
-braze campaigns list
+# initialize local config
+node packages/cli/dist/index.js auth init
 
-# Export a canvas as JSON for git diff
-braze canvas export <canvas-id> > canvas.json
+# add a workspace
+node packages/cli/dist/index.js auth workspace-add \
+  --workspace prod \
+  --base-url https://rest.iad-01.braze.com
 
-# Bulk update content blocks from CSV
-braze content-blocks bulk-update --from blocks.csv
+# optional: store key in OS keychain (if keytar available)
+node packages/cli/dist/index.js auth login --workspace prod --api-key <BRAZE_KEY>
 
-# Switch workspaces
-braze --workspace staging campaigns list
+# list campaigns as json
+BRAZE_API_KEY=<BRAZE_KEY> node packages/cli/dist/index.js campaigns list --workspace prod --output json
 ```
 
-## What's included
+## Bulk content block update CSV format
 
-| Resource | Read | Write |
-|---|---|---|
-| Campaigns | ✓ | trigger, schedule |
-| Canvases | ✓ | trigger, import |
-| Segments | ✓ | create, update |
-| Content blocks | ✓ | create, update, bulk |
-| Catalogs | ✓ | upload |
-| Users | ✓ | alias, delete |
-| Currents | validate | — |
+Use headers: `id,content`
 
-Full reference at [docs.braze-cli.dev](#) *(coming soon)*.
+```csv
+id,content
+block_123,"Hello {{${first_name | default: 'there'}}}"
+block_124,"Spring offer copy"
+```
 
-## Claude Code skill
-
-If you use [Claude Code](https://claude.com/claude-code), install the agent skill:
+Run a safe preview first:
 
 ```bash
-braze skill install
+node packages/cli/dist/index.js content-blocks bulk-update --from ./blocks.csv --workspace prod --dry-run --output table
 ```
 
-Then in Claude Code:
+Then apply:
 
-> *"Show me last week's underperforming campaigns and write a Slack summary I can post in #marketing-ops."*
+```bash
+BRAZE_API_KEY=<BRAZE_KEY> node packages/cli/dist/index.js content-blocks bulk-update --from ./blocks.csv --workspace prod
+```
 
-> *"Audit our segments and tell me which ones haven't been used in 90 days."*
+## Status and next milestones
 
-> *"Compare this canvas to its version from last month and explain what changed."*
-
-The skill translates natural language into CLI commands and handles multi-step workflows.
-
-## Authentication
-
-`braze-cli` uses Braze REST API keys, stored securely in your OS keychain (macOS Keychain, Linux Secret Service, Windows Credential Manager). For CI environments, set `BRAZE_API_KEY` as an environment variable.
-
-[Generate an API key in the Braze dashboard →](https://www.braze.com/docs/api/basics/#rest-api-key)
-
-Each workspace has its own key. Switch with `--workspace <name>` or set a default in `~/.braze/config.yaml`.
-
-## Roadmap
-
-- **v0.1** *(target: [date])* — Auth, campaigns, canvases, segments (read)
-- **v0.5** — Write operations, content blocks, catalogs, skill multi-step workflows
-- **v1.0** — Full coverage, multi-workspace config, CI integration recipes
-
-See [the full PRD](./docs/PRD.md) for context.
-
-## Contributing
-
-Issues, PRs, and feature requests welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-This project is **unofficial** and not affiliated with or endorsed by Braze, Inc. "Braze" is a trademark of Braze, Inc.
+- This release is aimed at **high-confidence operational scaffolding**.
+- Next expansion targets: campaigns/canvases write operations, users/catalogs, currents validation, CI recipes.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT
