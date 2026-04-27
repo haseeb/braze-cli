@@ -13,6 +13,10 @@ import type { OutputFormat } from "../lib/types.js";
 
 export const authCommand = (): Command => {
   const cmd = new Command("auth").description("Authentication and workspace helpers");
+import { configPath, ensureConfig } from "../lib/config.js";
+
+export const authCommand = (): Command => {
+  const cmd = new Command("auth").description("Authentication helpers");
 
   cmd
     .command("init")
@@ -73,6 +77,7 @@ export const authCommand = (): Command => {
     .action((opts: { output: OutputFormat }) => {
       const rows = listWorkspaces();
       print(rows, opts.output);
+      console.log(chalk.yellow("Set BRAZE_API_KEY in your environment for API calls."));
     });
 
   return cmd;

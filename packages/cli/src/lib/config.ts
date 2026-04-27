@@ -37,6 +37,11 @@ const normalizeConfig = (input: Partial<AppConfig> | undefined): AppConfig => {
   };
 };
 
+      apiKeyEnv: "BRAZE_API_KEY"
+    }
+  ]
+});
+
 export const ensureConfig = (): AppConfig => {
   if (!fs.existsSync(CONFIG_PATH)) {
     fs.mkdirSync(CONFIG_DIR, { recursive: true });
@@ -57,6 +62,7 @@ export const ensureConfig = (): AppConfig => {
 export const saveConfig = (config: AppConfig): void => {
   fs.mkdirSync(CONFIG_DIR, { recursive: true });
   fs.writeFileSync(CONFIG_PATH, YAML.stringify(config), "utf8");
+  return YAML.parse(raw) as AppConfig;
 };
 
 export const resolveWorkspace = (workspace?: string): WorkspaceConfig => {

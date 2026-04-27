@@ -24,4 +24,20 @@ BRAZE_API_KEY=*** node packages/cli/dist/index.js canvases get <canvas-id> --wor
 
 ```bash
 node packages/cli/dist/index.js content-blocks bulk-update --from ./blocks.csv --workspace prod --dry-run --concurrency 4 --output table
+## Campaign inventory
+
+```bash
+BRAZE_API_KEY=*** node packages/cli/dist/index.js campaigns list --workspace dev --output json
+```
+
+## Canvas lookup
+
+```bash
+BRAZE_API_KEY=*** node packages/cli/dist/index.js canvases get <canvas-id> --workspace dev --output yaml
+```
+
+## Segment inventory
+
+```bash
+BRAZE_API_KEY=*** node packages/cli/dist/index.js segments list --workspace dev --output table
 ```

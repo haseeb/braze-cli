@@ -10,6 +10,10 @@ export type WorkspaceConfig = {
 export type AppConfig = {
   version: 1;
   defaultWorkspace: string;
+};
+
+export type AppConfig = {
+  defaultWorkspace?: string;
   workspaces: WorkspaceConfig[];
 };
 
