@@ -14,8 +14,7 @@ const defaultConfig = (): AppConfig => ({
     {
       name: "dev",
       baseUrl: "https://rest.iad-01.braze.com",
-      apiKeyEnv: "BRAZE_API_KEY",
-      restEndpoint: ""
+      apiKeyEnv: "BRAZE_API_KEY"
     }
   ]
 });
@@ -31,16 +30,10 @@ const normalizeConfig = (input: Partial<AppConfig> | undefined): AppConfig => {
     workspaces:
       input.workspaces?.map((ws) => ({
         ...ws,
-        apiKeyEnv: ws.apiKeyEnv ?? "BRAZE_API_KEY",
-        restEndpoint: ws.restEndpoint ?? ""
+        apiKeyEnv: ws.apiKeyEnv ?? "BRAZE_API_KEY"
       })) ?? base.workspaces
   };
 };
-
-      apiKeyEnv: "BRAZE_API_KEY"
-    }
-  ]
-});
 
 export const ensureConfig = (): AppConfig => {
   if (!fs.existsSync(CONFIG_PATH)) {
@@ -62,7 +55,6 @@ export const ensureConfig = (): AppConfig => {
 export const saveConfig = (config: AppConfig): void => {
   fs.mkdirSync(CONFIG_DIR, { recursive: true });
   fs.writeFileSync(CONFIG_PATH, YAML.stringify(config), "utf8");
-  return YAML.parse(raw) as AppConfig;
 };
 
 export const resolveWorkspace = (workspace?: string): WorkspaceConfig => {

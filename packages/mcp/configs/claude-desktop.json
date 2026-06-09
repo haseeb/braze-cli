@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "braze-oss": {
+      "command": "npx",
+      "args": ["@braze-oss/mcp"],
+      "env": {
+        "BRAZE_API_KEY": "your-braze-api-key",
+        "BRAZE_WORKSPACE": "dev"
+      }
+    }
+  }
+}

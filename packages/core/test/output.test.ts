@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { parseOutputFormat, print } from "../src/lib/output.js";
-import { print } from "../src/lib/output.js";
+import { parseOutputFormat, print } from "../src/output.js";
 
 describe("output", () => {
   it("supports json output without throwing", () => {

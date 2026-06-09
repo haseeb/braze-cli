@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { parseContentBlocksCsv } from "../src/lib/csv.js";
+import { parseContentBlocksCsv } from "../src/csv.js";
 
 const createdFiles: string[] = [];
 

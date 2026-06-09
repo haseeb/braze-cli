@@ -1,0 +1,33 @@
+# Goose MCP configuration for Braze OSS
+
+## Stdio mode
+
+```yaml
+mcp_servers:
+  braze-oss:
+    command: npx
+    args:
+      - "@braze-oss/mcp"
+      - "--transport"
+      - "stdio"
+    env:
+      BRAZE_API_KEY: "${BRAZE_API_KEY}"
+      BRAZE_WORKSPACE: dev
+```
+
+## HTTP mode
+
+Run the server:
+
+```bash
+npx @braze-oss/mcp --transport http
+```
+
+```yaml
+mcp_servers:
+  braze-oss:
+    type: http
+    url: http://localhost:3000/mcp
+    headers:
+      Authorization: "Bearer ${BRAZE_MCP_API_KEY}"
+```

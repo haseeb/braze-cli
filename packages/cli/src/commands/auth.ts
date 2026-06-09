@@ -6,17 +6,13 @@ import {
   listWorkspaces,
   setDefaultWorkspace,
   upsertWorkspace
-} from "../lib/config.js";
-import { saveApiKey } from "../lib/credentials.js";
-import { parseOutputFormat, print } from "../lib/output.js";
-import type { OutputFormat } from "../lib/types.js";
+} from "@braze-oss/core";
+import { saveApiKey } from "@braze-oss/core";
+import { parseOutputFormat, print } from "@braze-oss/core";
+import type { OutputFormat } from "@braze-oss/core";
 
 export const authCommand = (): Command => {
   const cmd = new Command("auth").description("Authentication and workspace helpers");
-import { configPath, ensureConfig } from "../lib/config.js";
-
-export const authCommand = (): Command => {
-  const cmd = new Command("auth").description("Authentication helpers");
 
   cmd
     .command("init")
@@ -55,8 +51,7 @@ export const authCommand = (): Command => {
       upsertWorkspace({
         name: opts.workspace,
         baseUrl: opts.baseUrl,
-        apiKeyEnv: opts.apiKeyEnv,
-        restEndpoint: ""
+        apiKeyEnv: opts.apiKeyEnv
       });
       console.log(chalk.green(`Workspace '${opts.workspace}' saved.`));
     });

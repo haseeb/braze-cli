@@ -1,0 +1,33 @@
+{
+  "name": "@braze-oss/mcp",
+  "version": "0.1.0",
+  "description": "Braze MCP server — read-only tools for campaigns, canvases, segments, and content blocks",
+  "type": "module",
+  "bin": {
+    "braze-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "configs"
+  ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@braze-oss/core": "*",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^4.21.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.15.18",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  }
+}

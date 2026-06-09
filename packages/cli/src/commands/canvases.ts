@@ -1,10 +1,8 @@
 import { Command } from "commander";
-import { BrazeClient } from "../lib/braze-client.js";
-import { resolveWorkspace } from "../lib/config.js";
-import { parseOutputFormat, print } from "../lib/output.js";
-import { print } from "../lib/output.js";
-import { resolveWorkspace } from "../lib/config.js";
-import type { OutputFormat } from "../lib/types.js";
+import { BrazeClient } from "@braze-oss/core";
+import { resolveWorkspace } from "@braze-oss/core";
+import { parseOutputFormat, print } from "@braze-oss/core";
+import type { OutputFormat } from "@braze-oss/core";
 
 export const canvasesCommand = (): Command => {
   const cmd = new Command("canvases").description("Manage Braze canvases");
@@ -13,7 +11,6 @@ export const canvasesCommand = (): Command => {
     .command("list")
     .option("-w, --workspace <workspace>", "Workspace name")
     .option("-o, --output <format>", "table|json|yaml", parseOutputFormat, "table")
-    .option("-o, --output <format>", "table|json|yaml", "table")
     .action(async (opts: { workspace?: string; output: OutputFormat }) => {
       const workspace = resolveWorkspace(opts.workspace);
       const client = new BrazeClient(workspace);
@@ -26,7 +23,6 @@ export const canvasesCommand = (): Command => {
     .argument("<id>", "Canvas ID")
     .option("-w, --workspace <workspace>", "Workspace name")
     .option("-o, --output <format>", "table|json|yaml", parseOutputFormat, "json")
-    .option("-o, --output <format>", "table|json|yaml", "json")
     .action(async (id: string, opts: { workspace?: string; output: OutputFormat }) => {
       const workspace = resolveWorkspace(opts.workspace);
       const client = new BrazeClient(workspace);

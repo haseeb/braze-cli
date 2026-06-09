@@ -4,16 +4,11 @@ export type WorkspaceConfig = {
   name: string;
   baseUrl: string;
   apiKeyEnv?: string;
-  restEndpoint?: string;
 };
 
 export type AppConfig = {
-  version: 1;
+  version: number;
   defaultWorkspace: string;
-};
-
-export type AppConfig = {
-  defaultWorkspace?: string;
   workspaces: WorkspaceConfig[];
 };
 

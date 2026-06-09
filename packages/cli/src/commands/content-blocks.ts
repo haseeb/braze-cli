@@ -1,9 +1,9 @@
 import { Command } from "commander";
-import { BrazeClient } from "../lib/braze-client.js";
-import { parseContentBlocksCsv } from "../lib/csv.js";
-import { resolveWorkspace } from "../lib/config.js";
-import { parseOutputFormat, print } from "../lib/output.js";
-import type { ContentBlockBulkInput, OutputFormat } from "../lib/types.js";
+import { BrazeClient } from "@braze-oss/core";
+import { parseContentBlocksCsv } from "@braze-oss/core";
+import { resolveWorkspace } from "@braze-oss/core";
+import { parseOutputFormat, print } from "@braze-oss/core";
+import type { ContentBlockBulkInput, OutputFormat } from "@braze-oss/core";
 
 export const contentBlocksCommand = (): Command => {
   const cmd = new Command("content-blocks").description("Manage Braze content blocks");

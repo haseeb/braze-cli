@@ -1,25 +1,23 @@
 {
-  "name": "@braze/cli",
+  "name": "@braze-oss/core",
   "version": "0.2.0",
-  "description": "Unofficial Braze CLI",
+  "description": "Braze OSS core library — API client, config, credentials, types, and utilities",
   "type": "module",
-  "bin": {
-    "braze": "dist/index.js"
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "dev": "tsx src/index.ts",
-    "test": "vitest run --passWithNoTests",
-    "lint": "tsc -p tsconfig.json --noEmit"
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@braze-oss/core": "*",
-    "chalk": "^5.4.1",
     "cli-table3": "^0.6.5",
-    "commander": "^12.1.0",
     "yaml": "^2.8.1"
   },
   "optionalDependencies": {
@@ -27,7 +25,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.18",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vitest": "^3.1.3"
   }

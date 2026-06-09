@@ -23,7 +23,6 @@ Examples:
   braze content-blocks bulk-update --from ./blocks.csv --workspace staging --dry-run
 `
   );
-  .version("0.1.0");
 
 program.addCommand(authCommand());
 program.addCommand(campaignsCommand());
