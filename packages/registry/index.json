@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "generated_at": "2026-06-09T07:59:14.281Z",
+  "generated_at": "2026-06-09T23:41:36.853Z",
   "skills": [
     {
       "id": "braze-content-block-refactor",
@@ -28,14 +28,6 @@
         "goose": {
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
-        },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
         },
         "generic": {
           "type": "prompt",
@@ -76,14 +68,6 @@
         "goose": {
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
-        },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
         },
         "generic": {
           "type": "prompt",
@@ -126,14 +110,6 @@
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
         },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
-        },
         "generic": {
           "type": "prompt",
           "path": "SKILL.md"
@@ -174,14 +150,6 @@
         "goose": {
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
-        },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
         },
         "generic": {
           "type": "prompt",
@@ -229,14 +197,6 @@
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
         },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
-        },
         "generic": {
           "type": "prompt",
           "path": "SKILL.md"
@@ -279,14 +239,6 @@
         "goose": {
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
-        },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
         },
         "generic": {
           "type": "prompt",
@@ -332,14 +284,6 @@
         "goose": {
           "type": "recipe",
           "adapter": "adapters/goose.yaml"
-        },
-        "hermes": {
-          "type": "instructions",
-          "adapter": "adapters/hermes.md"
-        },
-        "openclaw": {
-          "type": "instructions",
-          "adapter": "adapters/openclaw.md"
         },
         "generic": {
           "type": "prompt",
