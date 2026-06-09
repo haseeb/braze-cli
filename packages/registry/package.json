@@ -3,11 +3,25 @@
   "version": "0.1.0",
   "description": "Braze OSS Skills Registry — portable, installable skill packs",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haseeb/braze-cli.git",
+    "directory": "packages/registry"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "skills",
     "index.json",
     "schema"
   ],
+  "exports": {
+    "./index.json": "./index.json",
+    "./package.json": "./package.json",
+    "./skills/*": "./skills/*"
+  },
   "scripts": {
     "generate-index": "tsx tools/generate-index.ts"
   },

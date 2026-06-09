@@ -1,11 +1,24 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { readFileSync, readdirSync } from "node:fs";
-import { resolve, join, dirname } from "node:path";
+import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { listHarnesses, installSkill, removeSkill } from "./lib/harness.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+
+// Resolve the registry package's root directory. Works both inside the
+// monorepo (workspace symlink) and when @braze-oss/registry is installed from
+// npm, so `npx @braze-oss/installer` finds the bundled skills.
+const resolveRegistryDir = (): string | undefined => {
+  try {
+    return dirname(require.resolve("@braze-oss/registry/package.json"));
+  } catch {
+    return undefined;
+  }
+};
 
 type SkillManifest = {
   id: string;
@@ -20,34 +33,33 @@ type RegistryIndex = {
   skills: SkillManifest[];
 };
 
-const loadIndex = (): RegistryIndex => {
-  const indexPaths = [
-    join(__dirname, "..", "..", "registry", "index.json"),
-    join(__dirname, "..", "..", "..", "registry", "index.json"),
-  ];
+const candidateIndexPaths = (): string[] => {
+  const paths: string[] = [];
+  const registryDir = resolveRegistryDir();
+  if (registryDir) paths.push(join(registryDir, "index.json"));
+  paths.push(join(__dirname, "..", "..", "registry", "index.json"));
+  paths.push(join(__dirname, "..", "..", "..", "registry", "index.json"));
+  return paths;
+};
 
-  for (const p of indexPaths) {
+const loadIndex = (): RegistryIndex => {
+  for (const p of candidateIndexPaths()) {
     try {
       return JSON.parse(readFileSync(p, "utf8"));
     } catch {
       continue;
     }
   }
-
-  try {
-    const registryModule = "@braze-oss/registry";
-    const pkgPath = resolve(join(__dirname, "..", "..", registryModule, "index.json"));
-    return JSON.parse(readFileSync(pkgPath, "utf8"));
-  } catch {
-    return { skills: [] };
-  }
+  return { skills: [] };
 };
 
 const findSkillPath = (skillId: string): string => {
+  const registryDir = resolveRegistryDir();
   const searchPaths = [
+    registryDir ? join(registryDir, "skills", skillId) : undefined,
     join(__dirname, "..", "..", "registry", "skills", skillId),
     join(__dirname, "..", "..", "..", "registry", "skills", skillId),
-  ];
+  ].filter((p): p is string => Boolean(p));
 
   for (const p of searchPaths) {
     try {
