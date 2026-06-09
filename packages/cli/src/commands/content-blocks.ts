@@ -1,8 +1,10 @@
 import { Command } from "commander";
+import chalk from "chalk";
 import { BrazeClient } from "@braze-oss/core";
 import { parseContentBlocksCsv } from "@braze-oss/core";
 import { resolveWorkspace } from "@braze-oss/core";
 import { parseOutputFormat, print } from "@braze-oss/core";
+import { planContentBlockUpdate, applyPlan } from "@braze-oss/core";
 import type { ContentBlockBulkInput, OutputFormat } from "@braze-oss/core";
 
 export const contentBlocksCommand = (): Command => {
@@ -70,6 +72,41 @@ export const contentBlocksCommand = (): Command => {
         print(results, opts.output);
       }
     );
+
+  cmd
+    .command("plan")
+    .description("Plan a content block update and show the diff")
+    .argument("<id>", "Content block ID")
+    .requiredOption("--content <content>", "New content")
+    .option("-w, --workspace <workspace>", "Workspace name")
+    .action(async (id: string, opts: { content: string; workspace?: string }) => {
+      const workspace = resolveWorkspace(opts.workspace);
+      const client = new BrazeClient(workspace);
+      const result = await planContentBlockUpdate(client, id, opts.content);
+
+      console.log(chalk.bold(`\nPlan: ${result.planId}`));
+      console.log(chalk.gray(`Content block: ${result.contentBlockId}`));
+      console.log(chalk.gray(`Workspace: ${result.workspace}`));
+      console.log(chalk.bold("\nDiff:"));
+      console.log(result.diff || "(no changes)");
+
+      console.log(chalk.yellow(`\nTo apply, run: braze content-blocks apply ${result.planId} --token ${result.token}`));
+    });
+
+  cmd
+    .command("apply")
+    .description("Apply a planned content block update")
+    .argument("<planId>", "Plan ID")
+    .requiredOption("--token <token>", "Confirmation token from plan step")
+    .option("-w, --workspace <workspace>", "Workspace name")
+    .action(async (planId: string, opts: { token: string; workspace?: string }) => {
+      const workspace = resolveWorkspace(opts.workspace);
+      const client = new BrazeClient(workspace);
+      const result = await applyPlan(client, planId, opts.token);
+
+      console.log(chalk.green(`Applied plan ${planId}`));
+      print(result, "json");
+    });
 
   return cmd;
 };

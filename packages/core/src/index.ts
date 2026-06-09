@@ -6,3 +6,7 @@ export * from "./csv.js";
 export * from "./output.js";
 export * from "./redact.js";
 export * from "./audit.js";
+export * from "./diff.js";
+export * from "./change-engine.js";
+export * from "./liquid.js";
+export * from "./ai-tools.js";

@@ -45,11 +45,23 @@ export type ContentBlockBulkInput = {
   content: string;
 };
 
+export type EmailTemplate = {
+  id: string;
+  name: string;
+  description?: string;
+  subject?: string;
+  body?: string;
+  tags?: string[];
+  created_at?: string;
+  updated_at?: string;
+};
+
 export type BrazeListResponse<T> = {
   items?: T[];
   campaigns?: T[];
   canvases?: T[];
   segments?: T[];
   content_blocks?: T[];
+  email_templates?: T[];
   message?: string;
 };

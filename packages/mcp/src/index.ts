@@ -8,28 +8,30 @@ import { bearerAuth } from "./auth.js";
 const PORT = parseInt(process.env.BRAZE_MCP_PORT ?? "3000", 10);
 const HOST = process.env.BRAZE_MCP_HOST ?? "127.0.0.1";
 
-const parseArgs = (): { transport: "stdio" | "http" } => {
+const parseArgs = (): { transport: "stdio" | "http"; allowWrites: boolean } => {
   const args = process.argv.slice(2);
   const transportIndex = args.indexOf("--transport");
+  let transport: "stdio" | "http" = "stdio";
+  const allowWrites = args.includes("--allow-writes");
 
   if (transportIndex >= 0 && args[transportIndex + 1]) {
     const value = args[transportIndex + 1];
     if (value === "stdio" || value === "http") {
-      return { transport: value };
+      transport = value;
     }
   }
 
-  return { transport: "stdio" };
+  return { transport, allowWrites };
 };
 
-async function runStdio(): Promise<void> {
-  const server = createMcpServer();
+async function runStdio(allowWrites: boolean): Promise<void> {
+  const server = createMcpServer({ allowWrites });
   const transport = new StdioServerTransport();
   await server.connect(transport);
 }
 
-async function runHttp(): Promise<void> {
-  const server = createMcpServer();
+async function runHttp(allowWrites: boolean): Promise<void> {
+  const server = createMcpServer({ allowWrites });
   const app = createMcpExpressApp({ host: HOST });
 
   app.use(bearerAuth());
@@ -56,15 +58,15 @@ async function runHttp(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const { transport } = parseArgs();
+  const { transport, allowWrites } = parseArgs();
 
   switch (transport) {
     case "http":
-      await runHttp();
+      await runHttp(allowWrites);
       break;
     case "stdio":
     default:
-      await runStdio();
+      await runStdio(allowWrites);
       break;
   }
 }

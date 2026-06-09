@@ -7,6 +7,7 @@ import type {
   Canvas,
   ContentBlock,
   ContentBlockBulkInput,
+  EmailTemplate,
   Segment,
   WorkspaceConfig
 } from "./types.js";
@@ -19,6 +20,10 @@ type ListResponse<T> = {
 
 export class BrazeClient {
   constructor(private readonly workspace: WorkspaceConfig) {}
+
+  get workspaceName(): string {
+    return this.workspace.name;
+  }
 
   async listCampaigns(): Promise<Campaign[]> {
     const data = await this.post<BrazeListResponse<Campaign>>("/campaigns/list", {});
@@ -75,6 +80,25 @@ export class BrazeClient {
     }
 
     return result;
+  }
+
+  async listEmailTemplates(): Promise<EmailTemplate[]> {
+    const data = await this.post<BrazeListResponse<EmailTemplate>>("/templates/email/list", {});
+    return data.email_templates ?? data.items ?? [];
+  }
+
+  async getEmailTemplate(id: string): Promise<EmailTemplate> {
+    return this.post<EmailTemplate>("/templates/email/info", { email_template_id: id });
+  }
+
+  async updateEmailTemplate(
+    id: string,
+    updates: { subject?: string; body?: string; name?: string },
+  ): Promise<{ message?: string }> {
+    return this.post<{ message?: string }>("/templates/email/update", {
+      email_template_id: id,
+      ...updates,
+    });
   }
 
   private async post<T>(endpoint: string, body: Record<string, unknown>): Promise<T> {
