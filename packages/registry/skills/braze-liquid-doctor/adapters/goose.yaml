@@ -1,0 +1,10 @@
+name: braze-liquid-doctor
+description: Lint and preview Liquid templates
+mcp_servers:
+  - braze-oss
+steps:
+  - accept_template
+  - lint_for_errors
+  - preview_with_sample_data
+  - report_issues
+  - suggest_fixes

@@ -1,0 +1,11 @@
+name: braze-decisioning-setup
+description: Scaffold a Decisioning Studio experiment
+mcp_servers:
+  - braze-oss
+allow_writes: true
+steps:
+  - define_experiment
+  - scaffold_variants
+  - generate_variant_copy
+  - pre_launch_audit
+  - export_for_review

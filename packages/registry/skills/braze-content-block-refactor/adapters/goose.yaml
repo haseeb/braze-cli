@@ -1,0 +1,11 @@
+name: braze-content-block-refactor
+description: Bulk content block updates with diff preview and approval gating
+mcp_servers:
+  - braze-oss
+allow_writes: true
+steps:
+  - list_content_blocks
+  - plan_updates_with_diff
+  - review_and_approve
+  - apply_with_token
+  - verify_and_audit

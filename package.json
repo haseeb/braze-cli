@@ -7,9 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run -w @braze-oss/core build && npm run -w @braze-oss/mcp build && npm run -w @braze/cli build",
-    "test": "npm run -w @braze-oss/core test && npm run -w @braze-oss/mcp test && npm run -w @braze/cli test",
-    "lint": "npm run -w @braze-oss/core lint && npm run -w @braze-oss/mcp lint && npm run -w @braze/cli lint"
+    "build": "npm run -w @braze-oss/core build && npm run -w @braze-oss/installer build && npm run -w @braze-oss/mcp build && npm run -w @braze/cli build",
+    "test": "npm run -w @braze-oss/core test && npm run -w @braze-oss/installer test && npm run -w @braze-oss/mcp test && npm run -w @braze/cli test",
+    "lint": "npm run -w @braze-oss/core lint && npm run -w @braze-oss/installer lint && npm run -w @braze-oss/mcp lint && npm run -w @braze/cli lint",
+    "generate-index": "npm run -w @braze-oss/registry generate-index"
   },
   "engines": {
     "node": ">=20"

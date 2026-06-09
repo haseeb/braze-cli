@@ -1,0 +1,11 @@
+name: braze-weekly-report
+description: Weekly Braze performance summary with wins/risks/actions
+mcp_servers:
+  - braze-oss
+steps:
+  - confirm_workspace_and_dates
+  - list_campaigns_and_canvases
+  - analyze_top_campaigns
+  - flag_anomalies
+  - generate_slack_summary
+output_format: markdown

@@ -1,0 +1,23 @@
+{
+  "id": "braze-content-block-refactor",
+  "name": "Braze Content Block Refactor",
+  "version": "1.0.0",
+  "description": "Bulk content-block edits with diff preview, approval gating, and audit trail.",
+  "category": "content",
+  "requires": {
+    "mcp": "@braze-oss/mcp >=0.1.0",
+    "permissions": ["content_blocks.read", "content_blocks.write"]
+  },
+  "entry": "SKILL.md",
+  "harnesses": {
+    "claude-code": { "type": "agent-skill", "path": "SKILL.md" },
+    "codex": { "type": "instructions", "adapter": "adapters/codex.md" },
+    "goose": { "type": "recipe", "adapter": "adapters/goose.yaml" },
+    "hermes": { "type": "instructions", "adapter": "adapters/hermes.md" },
+    "openclaw": { "type": "instructions", "adapter": "adapters/openclaw.md" },
+    "generic": { "type": "prompt", "path": "SKILL.md" }
+  },
+  "tags": ["braze", "content-blocks", "refactor", "bulk-update"],
+  "license": "MIT",
+  "author": "braze-oss"
+}

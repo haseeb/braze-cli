@@ -1,0 +1,11 @@
+name: braze-release-checklist
+description: Pre-release validation from staging to production
+mcp_servers:
+  - braze-oss
+steps:
+  - confirm_release_scope
+  - export_staging_resources
+  - compare_against_prod
+  - preview_content_diffs
+  - generate_recommendation
+output_format: checklist

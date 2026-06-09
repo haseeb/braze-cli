@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Braze OSS Skill Manifest",
+  "type": "object",
+  "required": ["id", "name", "version", "description", "entry", "harnesses"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Unique skill identifier (kebab-case)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "category": {
+      "type": "string",
+      "enum": ["reporting", "governance", "operations", "copy", "content", "liquid", "decisioning"]
+    },
+    "requires": {
+      "type": "object",
+      "properties": {
+        "mcp": { "type": "string" },
+        "permissions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "entry": {
+      "type": "string",
+      "description": "Main skill file (SKILL.md)"
+    },
+    "prompts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "harnesses": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string" },
+          "path": { "type": "string" },
+          "adapter": { "type": "string" }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "license": { "type": "string" },
+    "author": { "type": "string" }
+  }
+}

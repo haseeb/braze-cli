@@ -1,0 +1,10 @@
+name: braze-copy-studio
+description: Generate and stage copy variants with draft tokens
+mcp_servers:
+  - braze-oss
+allow_writes: true
+steps:
+  - define_goal_audience_tone
+  - generate_variants
+  - review_with_rationale
+  - plan_apply_to_content_blocks

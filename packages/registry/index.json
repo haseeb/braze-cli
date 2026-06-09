@@ -1,0 +1,359 @@
+{
+  "version": "0.1.0",
+  "generated_at": "2026-06-09T07:59:14.281Z",
+  "skills": [
+    {
+      "id": "braze-content-block-refactor",
+      "name": "Braze Content Block Refactor",
+      "version": "1.0.0",
+      "description": "Bulk content-block edits with diff preview, approval gating, and audit trail.",
+      "category": "content",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "content_blocks.read",
+          "content_blocks.write"
+        ]
+      },
+      "entry": "SKILL.md",
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "content-blocks",
+        "refactor",
+        "bulk-update"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    },
+    {
+      "id": "braze-copy-studio",
+      "name": "Braze Copy Studio",
+      "version": "1.0.0",
+      "description": "Generate and stage copy variants for campaigns with draft tokens.",
+      "category": "copy",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "copy.generate"
+        ]
+      },
+      "entry": "SKILL.md",
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "copy",
+        "generation",
+        "draft"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    },
+    {
+      "id": "braze-decisioning-setup",
+      "name": "Braze Decisioning Studio Setup",
+      "version": "1.0.0",
+      "description": "Scaffold a Decisioning Studio experiment with variants, goals, and audience targeting.",
+      "category": "decisioning",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "decisioning.scaffold",
+          "decisioning.report"
+        ]
+      },
+      "entry": "SKILL.md",
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "decisioning",
+        "experiment",
+        "scaffold"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    },
+    {
+      "id": "braze-liquid-doctor",
+      "name": "Braze Liquid Doctor",
+      "version": "1.0.0",
+      "description": "Lint and preview Liquid templates to catch syntax errors before they reach production.",
+      "category": "liquid",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "liquid.lint",
+          "liquid.preview"
+        ]
+      },
+      "entry": "SKILL.md",
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "liquid",
+        "lint",
+        "templates"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    },
+    {
+      "id": "braze-release-checklist",
+      "name": "Braze Release Checklist",
+      "version": "1.0.0",
+      "description": "Validate Braze release readiness with a go/no-go checklist from staging to prod.",
+      "category": "operations",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "campaigns.read",
+          "canvases.read",
+          "segments.read",
+          "content_blocks.read"
+        ]
+      },
+      "entry": "SKILL.md",
+      "prompts": [
+        "prompts/release-checklist.md"
+      ],
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "release",
+        "deployment",
+        "checklist"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    },
+    {
+      "id": "braze-segment-audit",
+      "name": "Braze Segment Audit",
+      "version": "1.0.0",
+      "description": "Identify cleanup opportunities and governance risks in Braze segments.",
+      "category": "governance",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "segments.read"
+        ]
+      },
+      "entry": "SKILL.md",
+      "prompts": [
+        "prompts/segment-audit.md"
+      ],
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "segments",
+        "governance",
+        "audit"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    },
+    {
+      "id": "braze-weekly-report",
+      "name": "Braze Weekly Performance Report",
+      "version": "1.0.0",
+      "description": "Pull KPIs and synthesize a wins/risks/actions report for weekly standups.",
+      "category": "reporting",
+      "requires": {
+        "mcp": "@braze-oss/mcp >=0.1.0",
+        "permissions": [
+          "campaigns.read",
+          "canvases.read",
+          "segments.read"
+        ]
+      },
+      "entry": "SKILL.md",
+      "prompts": [
+        "prompts/weekly-performance.md"
+      ],
+      "harnesses": {
+        "claude-code": {
+          "type": "agent-skill",
+          "path": "SKILL.md"
+        },
+        "codex": {
+          "type": "instructions",
+          "adapter": "adapters/codex.md"
+        },
+        "goose": {
+          "type": "recipe",
+          "adapter": "adapters/goose.yaml"
+        },
+        "hermes": {
+          "type": "instructions",
+          "adapter": "adapters/hermes.md"
+        },
+        "openclaw": {
+          "type": "instructions",
+          "adapter": "adapters/openclaw.md"
+        },
+        "generic": {
+          "type": "prompt",
+          "path": "SKILL.md"
+        }
+      },
+      "tags": [
+        "braze",
+        "reporting",
+        "kpi",
+        "weekly"
+      ],
+      "license": "MIT",
+      "author": "braze-oss"
+    }
+  ]
+}

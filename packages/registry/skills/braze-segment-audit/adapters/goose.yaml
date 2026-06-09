@@ -1,0 +1,9 @@
+name: braze-segment-audit
+description: Segment hygiene and governance audit
+mcp_servers:
+  - braze-oss
+steps:
+  - list_all_segments
+  - flag_issues
+  - generate_remediation_table
+output_format: table

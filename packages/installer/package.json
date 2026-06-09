@@ -1,0 +1,27 @@
+{
+  "name": "@braze-oss/installer",
+  "version": "0.1.0",
+  "description": "Braze OSS Skills Installer — add/remove/update skill packs across harnesses",
+  "type": "module",
+  "bin": {
+    "braze-oss": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@braze-oss/registry": "*",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.18",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  }
+}
