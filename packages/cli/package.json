@@ -1,8 +1,15 @@
 {
   "name": "@braze/cli",
   "version": "0.2.0",
-  "description": "Unofficial Braze CLI",
+  "description": "Unofficial Braze CLI for marketers and MarTech engineers",
   "type": "module",
+  "license": "MIT",
+  "keywords": ["braze", "cli", "martech", "liquid"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haseeb/braze-cli.git",
+    "directory": "packages/cli"
+  },
   "bin": {
     "braze": "dist/index.js"
   },
@@ -16,7 +23,7 @@
     "lint": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@braze-oss/core": "*",
+    "@braze-oss/core": "^0.2.0",
     "chalk": "^5.4.1",
     "cli-table3": "^0.6.5",
     "commander": "^12.1.0",

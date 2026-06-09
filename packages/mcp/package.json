@@ -1,8 +1,18 @@
 {
   "name": "@braze-oss/mcp",
   "version": "0.1.0",
-  "description": "Braze MCP server — read-only tools for campaigns, canvases, segments, and content blocks",
+  "description": "Braze MCP server — campaign/canvas/segment/content-block tools plus gated change and AI workflows, over stdio and HTTP",
   "type": "module",
+  "license": "MIT",
+  "keywords": ["braze", "mcp", "model-context-protocol", "martech", "ai-agents"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haseeb/braze-cli.git",
+    "directory": "packages/mcp"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "braze-mcp": "dist/index.js"
   },
@@ -19,7 +29,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@braze-oss/core": "*",
+    "@braze-oss/core": "^0.2.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "express": "^4.21.0",
     "zod": "^3.25.0"

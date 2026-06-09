@@ -3,6 +3,16 @@
   "version": "0.2.0",
   "description": "Braze OSS core library — API client, config, credentials, types, and utilities",
   "type": "module",
+  "license": "MIT",
+  "keywords": ["braze", "martech", "api-client", "mcp"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haseeb/braze-cli.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
