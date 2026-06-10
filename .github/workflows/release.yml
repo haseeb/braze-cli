@@ -1,0 +1,41 @@
+name: Release
+
+# Publishes the public packages to npm when a version tag is pushed
+# (e.g. `git tag v0.2.0 && git push origin v0.2.0`).
+# Requires an `NPM_TOKEN` repository secret with publish rights to the
+# @braze-oss scope.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+      # Publish in dependency order. `--workspace` honors each package's
+      # publishConfig. Already-published versions are skipped.
+      - name: Publish packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          for pkg in core registry mcp installer; do
+            echo "Publishing @braze-oss/$pkg..."
+            npm publish --workspace "packages/$pkg" --access public || \
+              echo "Skipped packages/$pkg (already published or no changes)."
+          done

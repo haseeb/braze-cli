@@ -1,1 +1,12 @@
-{ "comment": "Cursor MCP configuration for Braze OSS" }
+{
+  "mcpServers": {
+    "braze-oss": {
+      "command": "npx",
+      "args": ["@braze-oss/mcp", "--transport", "stdio"],
+      "env": {
+        "BRAZE_API_KEY": "${BRAZE_API_KEY}",
+        "BRAZE_WORKSPACE": "dev"
+      }
+    }
+  }
+}

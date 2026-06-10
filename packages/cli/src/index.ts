@@ -5,6 +5,9 @@ import { campaignsCommand } from "./commands/campaigns.js";
 import { canvasesCommand } from "./commands/canvases.js";
 import { contentBlocksCommand } from "./commands/content-blocks.js";
 import { segmentsCommand } from "./commands/segments.js";
+import { liquidCommand } from "./commands/liquid.js";
+import { insightsCommand } from "./commands/insights.js";
+import { auditCommand } from "./commands/audit.js";
 
 const program = new Command();
 
@@ -29,6 +32,9 @@ program.addCommand(campaignsCommand());
 program.addCommand(canvasesCommand());
 program.addCommand(segmentsCommand());
 program.addCommand(contentBlocksCommand());
+program.addCommand(liquidCommand());
+program.addCommand(insightsCommand());
+program.addCommand(auditCommand());
 
 program.parseAsync(process.argv).catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);

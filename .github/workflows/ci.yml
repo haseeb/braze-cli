@@ -6,9 +6,27 @@ on:
   pull_request:
 
 jobs:
-  cli:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+
+  registry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -16,6 +34,17 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run lint
-      - run: npm run test
-      - run: npm run build
+      # Regenerate the catalog and fail if it drifts from what's committed
+      # (ignoring the generated_at timestamp, which changes every run).
+      - name: Check registry index is up to date
+        run: |
+          npm run generate-index
+          node -e "
+            const fs=require('fs');
+            const before=JSON.parse(fs.readFileSync('packages/registry/index.json','utf8')).skills;
+            const git=require('child_process').execSync('git show HEAD:packages/registry/index.json').toString();
+            const committed=JSON.parse(git).skills;
+            const a=JSON.stringify(before), b=JSON.stringify(committed);
+            if(a!==b){console.error('index.json is stale — run \"npm run generate-index\" and commit.');process.exit(1);}
+            console.log('Registry index is in sync.');
+          "

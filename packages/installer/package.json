@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "description": "Braze OSS Skills Installer — add/remove/update skill packs across harnesses",
   "type": "module",
+  "license": "MIT",
+  "keywords": ["braze", "skills", "claude-code", "codex", "goose", "agent-skills"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haseeb/braze-cli.git",
+    "directory": "packages/installer"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "braze-oss": "dist/index.js"
   },
@@ -15,7 +25,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@braze-oss/registry": "*",
+    "@braze-oss/registry": "^0.1.0",
     "commander": "^12.1.0"
   },
   "devDependencies": {

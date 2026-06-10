@@ -31,26 +31,49 @@ async function runStdio(allowWrites: boolean): Promise<void> {
 }
 
 async function runHttp(allowWrites: boolean): Promise<void> {
-  const server = createMcpServer({ allowWrites });
   const app = createMcpExpressApp({ host: HOST });
 
   app.use(bearerAuth());
 
-  const transport = new StreamableHTTPServerTransport();
-
+  // Stateless transport: a fresh server + transport is created per request so
+  // that multiple cloud clients can connect concurrently without sharing
+  // session state. See the MCP Streamable HTTP "stateless mode" pattern.
   app.post("/mcp", async (req, res) => {
-    await transport.handleRequest(req, res, req.body);
+    const server = createMcpServer({ allowWrites });
+    const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+
+    res.on("close", () => {
+      void transport.close();
+      void server.close();
+    });
+
+    try {
+      await server.connect(transport);
+      await transport.handleRequest(req, res, req.body);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(`MCP request error: ${message}`);
+      if (!res.headersSent) {
+        res.status(500).json({
+          jsonrpc: "2.0",
+          error: { code: -32603, message: "Internal server error" },
+          id: null,
+        });
+      }
+    }
   });
 
-  app.get("/mcp", async (req, res) => {
-    await transport.handleRequest(req, res);
-  });
-
-  app.delete("/mcp", async (req, res) => {
-    await transport.handleRequest(req, res);
-  });
-
-  await server.connect(transport);
+  // Stateless mode does not support server-initiated SSE streams or session
+  // teardown, so GET/DELETE are not allowed.
+  const methodNotAllowed = (_req: unknown, res: { status: (n: number) => { json: (b: unknown) => void } }) => {
+    res.status(405).json({
+      jsonrpc: "2.0",
+      error: { code: -32000, message: "Method not allowed in stateless mode." },
+      id: null,
+    });
+  };
+  app.get("/mcp", methodNotAllowed);
+  app.delete("/mcp", methodNotAllowed);
 
   app.listen(PORT, HOST, () => {
     console.error(`Braze MCP server listening on http://${HOST}:${PORT}/mcp`);
